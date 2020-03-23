@@ -6,15 +6,27 @@ from doubly_linked_list import DoublyLinkedList
 class Queue:
     def __init__(self):
         self.size = 0
-        self.storage = DoublyLinkedList()
+        self.storage = DoublyLinkedList(self)
+        # self.delete= delete()
+
         # Why is our DLL a good choice to store our elements?
         # self.storage = ?
 
     def enqueue(self, value):
-        pass
+        self.size += 1
+        self.storage.add_to_head(value)
+        self.value = value
+
+
+
 
     def dequeue(self):
-        pass
+        if self.size < 1:
+            return None
+        else:
+            dq_item = self.storage.remove_from_tail()
+            self.storage.delete(dq_item)
+            return dq_item
 
     def len(self):
-        pass
+        return self.size
