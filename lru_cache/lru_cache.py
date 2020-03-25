@@ -11,10 +11,10 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        self.limit = limit
+        self.limit = limit # Max number of nodes in cache
         self.dll = DoublyLinkedList()
-        self.node_count = self.dll.length
-        self.storage_dict = {}
+        self.node_count = self.dll.length # Use the length of the dll as node counter
+        self.storage_dict = {} # Dictionary for hash table style lookups
 
     """
     Retrieves the value associated with the given key. Also
@@ -24,12 +24,12 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        if key in self.storage_dict:
+        if key in self.storage_dict: # If the key is in the dictionary, move corresponding node to tail return value
            node = self.storage_dict[key]
            self.dll.move_to_end(node)
            return node.value[1]
         else:
-            return None
+            return None # Returns None if no corresponding key in the dictionary
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -43,25 +43,17 @@ class LRUCache:
     """
     def set(self, key, value):
 
-        if key in self.storage_dict:
+        if key in self.storage_dict: # If the key is already in the dictionary, update with new value and move to tail
             node = self.storage_dict[key]
-            print(node, "NODE")
-            print(node.value, "NODE DOT VALUE 1")
             node.value = (key, value)
-            print(node, "NODE 2")
-            print(node.value, "NODE DOT VALUE 2")
             self.dll.move_to_end(node)
             return
 
-        if self.node_count == self.limit:
+        if self.node_count == self.limit: # If cache is full, remove least used entry from dictionary and dll head
             del self.storage_dict[self.dll.head.value[0]]
             self.dll.remove_from_head()
-            self.node_count += 1
+            self.node_count -= 1
 
-        self.dll.add_to_tail((key, value))
+        self.dll.add_to_tail((key, value)) # Add new node to dll tail and dictionary
         self.storage_dict[key] = self.dll.tail
         self.node_count += 1
-
-
-
-
