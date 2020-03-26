@@ -13,7 +13,7 @@ class LRUCache:
     def __init__(self, limit=10):
         self.limit = limit # Max number of nodes in cache
         self.dll = DoublyLinkedList()
-        self.node_count = self.dll.length # Use the length of the dll as node counter
+        self.node_count = self.dll.length # Use the length in dll as node counter
         self.storage_dict = {} # Dictionary for hash table style lookups
 
     """
